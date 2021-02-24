@@ -1,5 +1,5 @@
 exception emptyInputFile
-exception UnevenFields
+exception UnevenFields of int*int*int;
 exception notAllowed
 
 fun convert(infile,outfile,delim1,delim2)=(
@@ -43,16 +43,13 @@ fun convert(infile,outfile,delim1,delim2)=(
 													(
 													if(!currentRow=1) then 
 																(
-																numOfField:=(!numOfField+1);
+																numOfField:=(!numOfField+1)
+																) else ();
 																currentFieldNum:=(!currentFieldNum)+1;
 																TextIO.output(output,!currentField);
 																currentField:="";
 																qoutesInCurrentField:=0;
 																TextIO.output1(output,delim2)
-																)
-													else (
-														currentField:=(!currentField)^String.str(delim1)
-														)
 													)
 							else (
 								currentField:=(!currentField)^String.str(delim1)
@@ -74,8 +71,7 @@ fun convert(infile,outfile,delim1,delim2)=(
 									TextIO.output1(output,c);
 									if(!currentRow=1) then (numOfField:=(!numOfField)+1)
 									else (
-										(*if (!currentFieldNum <> !numOfField) then raise UnevenFields else();*)
-										
+										if (!currentFieldNum <> !numOfField) then raise UnevenFields (!numOfField,!currentFieldNum,!currentRow) else()
 										);
 									currentRow:=(!currentRow)+1;
 									currentField:="";
@@ -96,11 +92,16 @@ fun convert(infile,outfile,delim1,delim2)=(
 		end
 		)
 		
-fun convertDelimeter(infile,outfile,delim1,delim2) = convert(infile,outfile,delim1,delim2)
-	handle emptyInputFile=>print("nson")
-	|UnevenFields => print("adfa")
-	|notAllowed => print("dfa");
+fun convertDelimeters(infilename,delim1,outfilename,delim2) = convert(infilename,outfilename,delim1,delim2)
+	handle emptyInputFile=>print("Input File in Empty")
+	|UnevenFields (totalFields,currentFields,lineNumber) => print("Expected: "^Int.toString(totalFields)^" fields, Present:"^Int.toString(currentFields)^" on Line "^Int.toString(lineNumber)^"\n")
+	|notAllowed => print("First character of file cannot be a delimeter");
 	
-convertDelimeter("TestCases/himym.csv","b.txt",#",",#";");
-	
+fun csv2tsv(infilename,outfilename)= convertDelimeters(infilename,#",",outfilename,#"\t");
+
+fun tsv2csv(infilename,outfilename) = convertDelimeters(infilename,#"\t",outfilename,#",")
+
+
+
+
 
