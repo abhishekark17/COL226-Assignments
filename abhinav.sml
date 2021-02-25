@@ -149,5 +149,5 @@ fun convertNewlines(infilename, newline1, outfilename, newline2) =
 
 fun unix2dos (infilename,outfilename) = convertNewlines (infilename,"\n",outfilename,"\r\n");
 fun dos2unix (infilename,outfilename) = convertNewlines (infilename,"\r\n",outfilename,"\n");
-
+csv2tsv("TestCases/himym.csv","b.txt");
 (*-----------------------------------  END OF ASSIGNMENT  ------------------------------------------*)
