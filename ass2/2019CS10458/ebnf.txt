@@ -1,6 +1,6 @@
 program	::= statement.
 statement	::= formula TERM statement | <epsilon>.
-formula	::= |IF formula THEN formula ELSE formula
+formula	::= IF formula THEN formula ELSE formula
 		|formula IMPLIES formula
 		|formula AND formula
 		|formula OR formula
@@ -11,6 +11,7 @@ formula	::= |IF formula THEN formula ELSE formula
 		|CONST
 		|ID.
 
+TERM		::= ";".
 CONST		::= "TRUE"|"FALSE".
 NOT		::= "NOT".
 AND		::= "AND".
