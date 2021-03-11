@@ -64,13 +64,7 @@ fun convert(infile,outfile,delim1,delim2:char)=(
 				)
 			|SOME(c)=>(
 				if (c=delim1) then (
-							if (!currentRow=1 andalso (!currentFieldNum=0 andalso !currentField="")) then (
-																										raise notAllowed;
-																										TextIO.closeIn input;
-																										TextIO.closeOut output
-																										)
-							
-							else if (!qoutesInCurrentField mod 2 = 0) then 
+							if (!qoutesInCurrentField mod 2 = 0) then 
 													(
 													if(!currentRow=1) then 
 																(
@@ -151,14 +145,15 @@ fun convert(infile,outfile,delim1,delim2:char)=(
 
 (* Main Functions Starts here *)
 		
-fun convertDelimeters(infilename,delim1,outfilename,delim2:char) = convert(infilename,outfilename,delim1,delim2)
+fun convertDelimiters(infilename,delim1,outfilename,delim2:char) = convert(infilename,outfilename,delim1,delim2)
 	handle emptyInputFile=>print("Input File in Empty\n")
 	|UnevenFields (totalFields,currentFields,lineNumber) => printUnevenException(totalFields,currentFields,lineNumber)
 	|notAllowed => print("First character of file cannot be a delimeter\n")
 	|parenthesisDoesNotMatch => print("parenthesis Does Not Match\n")
 	|unEscapedQoutes => print("Qoutes in input File have not been escaped\n");
 	
-fun csv2tsv(infilename,outfilename)= convertDelimeters(infilename,#",",outfilename,#"\t");
+fun csv2tsv(infilename,outfilename)= convertDelimiters(infilename,#",",outfilename,#"\t");
 
-fun tsv2csv(infilename,outfilename) = convertDelimeters(infilename,#"\t",outfilename,#",");	
+fun tsv2csv(infilename,outfilename) = convertDelimiters(infilename,#"\t",outfilename,#",");	
 
+csv2tsv("a.txt","b.txt");
