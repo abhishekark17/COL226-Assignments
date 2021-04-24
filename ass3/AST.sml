@@ -8,11 +8,11 @@ datatype Term = EOS
 datatype Type = INT | BOOL
 datatype arrow = Arrow of Type*Type
 datatype Paren = LeftParen | RightParen
-datatype program = Program of statement
-and statement = Statement of exp*statement | EndOfFile
-and decl = ValDecl of exp*exp
-and  exp = Id of string
-| IfElseThen of exp * exp * exp
+datatype program = Program of statement 
+and statement = FunctionStatement of function*statement | ExpressionStatement of exp*statement | EndOfFile
+and decl = ValDeclExp of string*exp | ValDeclFunc of string*function
+and function = Fn of string*Type*Type*exp | Fun of string*string*arrow*Type*exp
+and  exp = IfElseThen of exp * exp * exp
 | BinExp of binop*exp*exp
 | UnaryExp of uniop*exp
 | BracketExp of Paren*exp*Paren
@@ -21,10 +21,8 @@ and  exp = Id of string
 | StringExp of string
 | LetExp of decl*exp
 | NumExp of int
-| AppExp of id*exp
+| AppExp of exp*exp
 | EndOfStatement
-| Fn of id*Type*Type*exp
-| Fun of id*id*arrow*Type*exp
 
 end
 				

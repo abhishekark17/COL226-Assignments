@@ -12,7 +12,7 @@
   | PLUS | MINUS | TIMES | NEGATE | LESSTHAN | GREATERTHAN
   | LET | IN | END | EQ | NUM of int | FUN | Fn | COLON | ARROW | ASSIGN | INT | BOOL
 
-%nonterm formula of AST.exp | program of AST.program | statement of AST.statement | DECL of AST.decl | TYPE of AST.Type
+%nonterm expression of AST.exp | program of AST.statement| statement of AST.statement | DECL of AST.decl | TYPE of AST.Type | function of AST.function
 
 %pos int 
 
@@ -38,35 +38,39 @@
 %verbose
 
 %%
-program: statement (AST.Program(statement))
+program: statement (statement)
 
-statement: formula statement(AST.Statement(formula,statement))
-	|(AST.EndOfFile)
+statement: function statement(AST.FunctionStatement(function,statement))
+		| expression statement(AST.ExpressionStatement(expression,statement))
+		| (AST.EndOfFile)
 
-DECL: ID EQ formula(AST.ValDecl(AST.VarExp(ID),formula))
+DECL: ID EQ function(AST.ValDeclFunc(ID,function))
+	| ID EQ expression(AST.ValDeclExp(ID,expression))
 
 TYPE: INT (AST.INT)
 	| BOOL (AST.BOOL)
+
+function: FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression (AST.Fun(ID1,ID2,AST.Arrow(TYPE1,TYPE2),TYPE3,expression))
+		| Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression(AST.Fn(ID,TYPE1,TYPE2,expression))
+
 	
-formula: IF formula THEN formula ELSE formula FI(AST.IfElseThen(formula1,formula2,formula3))
-	|formula IMPLIES formula (AST.BinExp(AST.Implies,formula1,formula2))
-	|formula AND formula (AST.BinExp(AST.And,formula1,formula2))
-	|formula OR formula (AST.BinExp(AST.OR,formula1,formula2))
-	|formula XOR formula (AST.BinExp(AST.Xor,formula1,formula2))
-	|formula EQUALS formula (AST.BinExp(AST.Equals,formula1,formula2))
-	|NOT formula (AST.UnaryExp(AST.Not,formula))
-	|LPAREN formula RPAREN (formula)
+expression: IF expression THEN expression ELSE expression FI(AST.IfElseThen(expression1,expression2,expression3))
+	|expression IMPLIES expression (AST.BinExp(AST.Implies,expression1,expression2))
+	|expression AND expression (AST.BinExp(AST.And,expression1,expression2))
+	|expression OR expression (AST.BinExp(AST.OR,expression1,expression2))
+	|expression XOR expression (AST.BinExp(AST.Xor,expression1,expression2))
+	|expression EQUALS expression (AST.BinExp(AST.Equals,expression1,expression2))
+	|NOT expression (AST.UnaryExp(AST.Not,expression))
+	|LPAREN expression RPAREN (expression)
 	|CONST (AST.Const(CONST))
 	|ID (AST.VarExp(ID))
-	|TERM (AST.EndOfStatement)
-	|LET DECL IN formula END(AST.LetExp(DECL,formula))
-	|formula LESSTHAN formula (AST.BinExp(AST.LESSTHAN,formula1,formula2))
-	|formula GREATERTHAN formula (AST.BinExp(AST.GREATERTHAN,formula1,formula2))
-	|formula PLUS formula (AST.BinExp(AST.Plus,formula1,formula2))
-	|formula MINUS formula (AST.BinExp(AST.Minus,formula1,formula2))
-	|NEGATE formula (AST.UnaryExp(AST.Negate,formula))
-	|formula TIMES formula (AST.BinExp(AST.Times,formula1,formula2))
+	|LET DECL IN expression END(AST.LetExp(DECL,expression))
+	|expression LESSTHAN expression (AST.BinExp(AST.LESSTHAN,expression1,expression2))
+	|expression GREATERTHAN expression (AST.BinExp(AST.GREATERTHAN,expression1,expression2))
+	|expression PLUS expression (AST.BinExp(AST.Plus,expression1,expression2))
+	|expression MINUS expression (AST.BinExp(AST.Minus,expression1,expression2))
+	|NEGATE expression (AST.UnaryExp(AST.Negate,expression))
+	|expression TIMES expression (AST.BinExp(AST.Times,expression1,expression2))
 	|NUM (AST.NumExp(NUM))
-	|LPAREN ID formula RPAREN (AST.AppExp(ID,formula))
-	|Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula(AST.Fn(ID,TYPE1,TYPE2,formula))
-	|FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula (AST.Fun(ID1,ID2,AST.Arrow(TYPE1,TYPE2),TYPE3,formula))
+	|LPAREN expression expression RPAREN (AST.AppExp(expression1,expression2))
+	

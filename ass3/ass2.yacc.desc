@@ -3,26 +3,48 @@ state 0:
 
 	program : . statement 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
+	FUN	shift 5
+	Fn	shift 4
 
-	formula	goto 2
-	program	goto 78
-	statement	goto 1
+	expression	goto 3
+	program	goto 79
+	statement	goto 2
+	function	goto 1
 
-	.	reduce by rule 2
+	.	reduce by rule 3
 
 
 state 1:
+
+	statement : function . statement 
+
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
+	FUN	shift 5
+	Fn	shift 4
+
+	expression	goto 3
+	statement	goto 14
+	function	goto 1
+
+	.	reduce by rule 3
+
+
+state 2:
 
 	program : statement .  (reduce by rule 0)
 
@@ -31,63 +53,53 @@ state 1:
 	.	reduce by rule 0
 
 
-state 2:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	statement : formula . statement 
-
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	NEGATE	shift 7
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
-
-	formula	goto 2
-	statement	goto 14
-
-	.	reduce by rule 2
-
-
 state 3:
 
-	formula : Fn . LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	statement : expression . statement 
 
-	LPAREN	shift 25
+	CONST	shift 13
+	NOT	shift 12
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	NEGATE	shift 8
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+	LET	shift 7
+	NUM	shift 6
+	FUN	shift 5
+	Fn	shift 4
 
+	expression	goto 3
+	statement	goto 15
+	function	goto 1
 
-	.	error
+	.	reduce by rule 3
 
 
 state 4:
 
-	formula : FUN . ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : Fn . LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression 
 
-	ID	shift 26
+	LPAREN	shift 26
 
 
 	.	error
@@ -95,139 +107,128 @@ state 4:
 
 state 5:
 
-	formula : NUM .  (reduce by rule 24)
+	function : FUN . ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
+	ID	shift 27
 
-
-	.	reduce by rule 24
-
-
-state 6:
-
-	formula : LET . DECL IN formula END 
-
-	ID	shift 28
-
-	DECL	goto 27
 
 	.	error
 
 
+state 6:
+
+	expression : NUM .  (reduce by rule 27)
+
+
+
+	.	reduce by rule 27
+
+
 state 7:
 
-	formula : NEGATE . formula 
+	expression : LET . DECL IN expression END 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	ID	shift 29
 
-	formula	goto 29
+	DECL	goto 28
 
 	.	error
 
 
 state 8:
 
-	formula : ID .  (reduce by rule 15)
+	expression : NEGATE . expression 
 
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-
-	.	reduce by rule 15
-
-
-state 9:
-
-	formula : LPAREN . formula RPAREN 
-	formula : LPAREN . ID formula RPAREN 
-
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 31
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
-
-	formula	goto 30
+	expression	goto 30
 
 	.	error
 
 
+state 9:
+
+	expression : ID .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
 state 10:
 
-	formula : IF . formula THEN formula ELSE formula FI 
+	expression : LPAREN . expression RPAREN 
+	expression : LPAREN . expression expression RPAREN 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 32
+	expression	goto 31
 
 	.	error
 
 
 state 11:
 
-	formula : NOT . formula 
+	expression : IF . expression THEN expression ELSE expression FI 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 33
+	expression	goto 32
 
 	.	error
 
 
 state 12:
 
-	formula : CONST .  (reduce by rule 14)
+	expression : NOT . expression 
 
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
+	expression	goto 33
 
-	.	reduce by rule 14
+	.	error
 
 
 state 13:
 
-	formula : TERM .  (reduce by rule 16)
+	expression : CONST .  (reduce by rule 18)
 
 
 
-	.	reduce by rule 16
+	.	reduce by rule 18
 
 
 state 14:
 
-	statement : formula statement .  (reduce by rule 1)
+	statement : function statement .  (reduce by rule 1)
 
 
 
@@ -236,217 +237,196 @@ state 14:
 
 state 15:
 
-	formula : formula GREATERTHAN . formula 
+	statement : expression statement .  (reduce by rule 2)
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
 
-	formula	goto 34
 
-	.	error
+	.	reduce by rule 2
 
 
 state 16:
 
-	formula : formula LESSTHAN . formula 
+	expression : expression GREATERTHAN . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 35
+	expression	goto 34
 
 	.	error
 
 
 state 17:
 
-	formula : formula TIMES . formula 
+	expression : expression LESSTHAN . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 36
+	expression	goto 35
 
 	.	error
 
 
 state 18:
 
-	formula : formula MINUS . formula 
+	expression : expression TIMES . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 37
+	expression	goto 36
 
 	.	error
 
 
 state 19:
 
-	formula : formula PLUS . formula 
+	expression : expression MINUS . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 38
+	expression	goto 37
 
 	.	error
 
 
 state 20:
 
-	formula : formula IMPLIES . formula 
+	expression : expression PLUS . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 39
+	expression	goto 38
 
 	.	error
 
 
 state 21:
 
-	formula : formula EQUALS . formula 
+	expression : expression IMPLIES . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 40
+	expression	goto 39
 
 	.	error
 
 
 state 22:
 
-	formula : formula XOR . formula 
+	expression : expression EQUALS . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 41
+	expression	goto 40
 
 	.	error
 
 
 state 23:
 
-	formula : formula OR . formula 
+	expression : expression XOR . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 42
+	expression	goto 41
 
 	.	error
 
 
 state 24:
 
-	formula : formula AND . formula 
+	expression : expression OR . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 43
+	expression	goto 42
 
 	.	error
 
 
 state 25:
 
-	formula : Fn LPAREN . ID COLON TYPE RPAREN COLON TYPE ASSIGN formula 
+	expression : expression AND . expression 
+
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
+
+	expression	goto 43
+
+	.	error
+
+
+state 26:
+
+	function : Fn LPAREN . ID COLON TYPE RPAREN COLON TYPE ASSIGN expression 
 
 	ID	shift 44
 
@@ -454,9 +434,9 @@ state 25:
 	.	error
 
 
-state 26:
+state 27:
 
-	formula : FUN ID . LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : FUN ID . LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
 	LPAREN	shift 45
 
@@ -464,9 +444,9 @@ state 26:
 	.	error
 
 
-state 27:
+state 28:
 
-	formula : LET DECL . IN formula END 
+	expression : LET DECL . IN expression END 
 
 	IN	shift 46
 
@@ -474,9 +454,10 @@ state 27:
 	.	error
 
 
-state 28:
+state 29:
 
-	DECL : ID . EQ formula 
+	DECL : ID . EQ function 
+	DECL : ID . EQ expression 
 
 	EQ	shift 47
 
@@ -484,112 +465,100 @@ state 28:
 	.	error
 
 
-state 29:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : NEGATE formula .  (reduce by rule 22)
-	formula : formula . TIMES formula 
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
-
-
-	.	reduce by rule 22
-
-
 state 30:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : LPAREN formula . RPAREN 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : NEGATE expression .  (reduce by rule 25)
+	expression : expression . TIMES expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	RPAREN	shift 48
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
-	.	error
+	.	reduce by rule 25
 
 
 state 31:
 
-	formula : ID .  (reduce by rule 15)
-	formula : LPAREN ID . formula RPAREN 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : LPAREN expression . RPAREN 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	expression : LPAREN expression . expression RPAREN 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	IF	shift 11
+	LPAREN	shift 10
+	RPAREN	shift 49
+	ID	shift 9
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	NEGATE	shift 8
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 49
+	expression	goto 48
 
-	.	reduce by rule 15
+	.	error
 
 
 state 32:
 
-	formula : IF formula . THEN formula ELSE formula FI 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : IF expression . THEN expression ELSE expression FI 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
 	THEN	shift 50
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
 	.	error
@@ -597,253 +566,253 @@ state 32:
 
 state 33:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : NOT formula .  (reduce by rule 12)
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : NOT expression .  (reduce by rule 16)
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
-	.	reduce by rule 12
+	.	reduce by rule 16
 
 
 state 34:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula GREATERTHAN formula .  (reduce by rule 19)
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression GREATERTHAN expression .  (reduce by rule 22)
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
+	IMPLIES	shift 21
 
 
-	.	reduce by rule 19
+	.	reduce by rule 22
 
 
 state 35:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula LESSTHAN formula .  (reduce by rule 18)
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression LESSTHAN expression .  (reduce by rule 21)
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
-
-
-	.	reduce by rule 18
-
-
-state 36:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	formula : formula TIMES formula .  (reduce by rule 23)
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	PLUS	shift 19
-	MINUS	shift 18
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
-
-
-	.	reduce by rule 23
-
-
-state 37:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula MINUS formula .  (reduce by rule 21)
-	formula : formula . TIMES formula 
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	IMPLIES	shift 21
 
 
 	.	reduce by rule 21
 
 
+state 36:
+
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	expression : expression TIMES expression .  (reduce by rule 26)
+
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+
+
+	.	reduce by rule 26
+
+
+state 37:
+
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression MINUS expression .  (reduce by rule 24)
+	expression : expression . TIMES expression 
+
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+
+
+	.	reduce by rule 24
+
+
 state 38:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula PLUS formula .  (reduce by rule 20)
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression PLUS expression .  (reduce by rule 23)
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
-	.	reduce by rule 20
+	.	reduce by rule 23
 
 
 state 39:
 
-	formula : formula . IMPLIES formula 
-	formula : formula IMPLIES formula .  (reduce by rule 7)
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression IMPLIES expression .  (reduce by rule 11)
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
-
-
-	.	reduce by rule 7
-
-
-state 40:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula EQUALS formula .  (reduce by rule 11)
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-
-	IMPLIES	shift 20
+	IMPLIES	shift 21
 
 
 	.	reduce by rule 11
 
 
+state 40:
+
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression EQUALS expression .  (reduce by rule 15)
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+
+	IMPLIES	shift 21
+
+
+	.	reduce by rule 15
+
+
 state 41:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula XOR formula .  (reduce by rule 10)
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression XOR expression .  (reduce by rule 14)
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
+	IMPLIES	shift 21
 
 
-	.	reduce by rule 10
+	.	reduce by rule 14
 
 
 state 42:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula OR formula .  (reduce by rule 9)
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression OR expression .  (reduce by rule 13)
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
+	IMPLIES	shift 21
 
 
-	.	reduce by rule 9
+	.	reduce by rule 13
 
 
 state 43:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula AND formula .  (reduce by rule 8)
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression AND expression .  (reduce by rule 12)
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	IMPLIES	shift 20
+	IMPLIES	shift 21
 
 
-	.	reduce by rule 8
+	.	reduce by rule 12
 
 
 state 44:
 
-	formula : Fn LPAREN ID . COLON TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID . COLON TYPE RPAREN COLON TYPE ASSIGN expression 
 
 	COLON	shift 51
 
@@ -853,7 +822,7 @@ state 44:
 
 state 45:
 
-	formula : FUN ID LPAREN . ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : FUN ID LPAREN . ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
 	ID	shift 52
 
@@ -863,123 +832,118 @@ state 45:
 
 state 46:
 
-	formula : LET DECL IN . formula END 
+	expression : LET DECL IN . expression END 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 53
+	expression	goto 53
 
 	.	error
 
 
 state 47:
 
-	DECL : ID EQ . formula 
+	DECL : ID EQ . function 
+	DECL : ID EQ . expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
+	FUN	shift 5
+	Fn	shift 4
 
-	formula	goto 54
+	expression	goto 55
+	function	goto 54
 
 	.	error
 
 
 state 48:
 
-	formula : LPAREN formula RPAREN .  (reduce by rule 13)
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	expression : LPAREN expression expression . RPAREN 
 
-
-
-	.	reduce by rule 13
-
-
-state 49:
-
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	formula : LPAREN ID formula . RPAREN 
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	RPAREN	shift 55
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	RPAREN	shift 56
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
 	.	error
 
 
+state 49:
+
+	expression : LPAREN expression RPAREN .  (reduce by rule 17)
+
+
+
+	.	reduce by rule 17
+
+
 state 50:
 
-	formula : IF formula THEN . formula ELSE formula FI 
+	expression : IF expression THEN . expression ELSE expression FI 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
-	formula	goto 56
+	expression	goto 57
 
 	.	error
 
 
 state 51:
 
-	formula : Fn LPAREN ID COLON . TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID COLON . TYPE RPAREN COLON TYPE ASSIGN expression 
 
-	INT	shift 59
-	BOOL	shift 58
+	INT	shift 60
+	BOOL	shift 59
 
-	TYPE	goto 57
+	TYPE	goto 58
 
 	.	error
 
 
 state 52:
 
-	formula : FUN ID LPAREN ID . COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : FUN ID LPAREN ID . COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
-	COLON	shift 60
+	COLON	shift 61
 
 
 	.	error
@@ -987,29 +951,29 @@ state 52:
 
 state 53:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : LET DECL IN formula . END 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : LET DECL IN expression . END 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
-	END	shift 61
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+	END	shift 62
 
 
 	.	error
@@ -1017,77 +981,76 @@ state 53:
 
 state 54:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	DECL : ID EQ formula .  (reduce by rule 3)
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	DECL : ID EQ function .  (reduce by rule 4)
 
 
-	.	reduce by rule 3
+
+	.	reduce by rule 4
 
 
 state 55:
 
-	formula : LPAREN ID formula RPAREN .  (reduce by rule 25)
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	DECL : ID EQ expression .  (reduce by rule 5)
+
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
-
-	.	reduce by rule 25
+	.	reduce by rule 5
 
 
 state 56:
 
-	formula : IF formula THEN formula . ELSE formula FI 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	ELSE	shift 62
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	expression : LPAREN expression expression RPAREN .  (reduce by rule 28)
 
 
-	.	error
+
+	.	reduce by rule 28
 
 
 state 57:
 
-	formula : Fn LPAREN ID COLON TYPE . RPAREN COLON TYPE ASSIGN formula 
+	expression : IF expression THEN expression . ELSE expression FI 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	RPAREN	shift 63
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	ELSE	shift 63
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
 
 	.	error
@@ -1095,79 +1058,76 @@ state 57:
 
 state 58:
 
-	TYPE : BOOL .  (reduce by rule 5)
+	function : Fn LPAREN ID COLON TYPE . RPAREN COLON TYPE ASSIGN expression 
+
+	RPAREN	shift 64
 
 
-
-	.	reduce by rule 5
+	.	error
 
 
 state 59:
 
-	TYPE : INT .  (reduce by rule 4)
+	TYPE : BOOL .  (reduce by rule 7)
 
 
 
-	.	reduce by rule 4
+	.	reduce by rule 7
 
 
 state 60:
 
-	formula : FUN ID LPAREN ID COLON . TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	TYPE : INT .  (reduce by rule 6)
 
-	INT	shift 59
-	BOOL	shift 58
 
-	TYPE	goto 64
 
-	.	error
+	.	reduce by rule 6
 
 
 state 61:
 
-	formula : LET DECL IN formula END .  (reduce by rule 17)
+	function : FUN ID LPAREN ID COLON . TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
+	INT	shift 60
+	BOOL	shift 59
 
-
-	.	reduce by rule 17
-
-
-state 62:
-
-	formula : IF formula THEN formula ELSE . formula FI 
-
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
-
-	formula	goto 65
+	TYPE	goto 65
 
 	.	error
 
 
+state 62:
+
+	expression : LET DECL IN expression END .  (reduce by rule 20)
+
+
+
+	.	reduce by rule 20
+
+
 state 63:
 
-	formula : Fn LPAREN ID COLON TYPE RPAREN . COLON TYPE ASSIGN formula 
+	expression : IF expression THEN expression ELSE . expression FI 
 
-	COLON	shift 66
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
+	expression	goto 66
 
 	.	error
 
 
 state 64:
 
-	formula : FUN ID LPAREN ID COLON TYPE . ARROW TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID COLON TYPE RPAREN . COLON TYPE ASSIGN expression 
 
-	ARROW	shift 67
+	COLON	shift 67
 
 
 	.	error
@@ -1175,29 +1135,9 @@ state 64:
 
 state 65:
 
-	formula : IF formula THEN formula ELSE formula . FI 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
+	function : FUN ID LPAREN ID COLON TYPE . ARROW TYPE RPAREN COLON TYPE ASSIGN expression 
 
-	AND	shift 24
-	OR	shift 23
-	XOR	shift 22
-	EQUALS	shift 21
-	IMPLIES	shift 20
-	FI	shift 68
-	PLUS	shift 19
-	MINUS	shift 18
-	TIMES	shift 17
-	LESSTHAN	shift 16
-	GREATERTHAN	shift 15
+	ARROW	shift 68
 
 
 	.	error
@@ -1205,22 +1145,40 @@ state 65:
 
 state 66:
 
-	formula : Fn LPAREN ID COLON TYPE RPAREN COLON . TYPE ASSIGN formula 
+	expression : IF expression THEN expression ELSE expression . FI 
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
 
-	INT	shift 59
-	BOOL	shift 58
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	FI	shift 69
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
 
-	TYPE	goto 69
 
 	.	error
 
 
 state 67:
 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW . TYPE RPAREN COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID COLON TYPE RPAREN COLON . TYPE ASSIGN expression 
 
-	INT	shift 59
-	BOOL	shift 58
+	INT	shift 60
+	BOOL	shift 59
 
 	TYPE	goto 70
 
@@ -1229,28 +1187,30 @@ state 67:
 
 state 68:
 
-	formula : IF formula THEN formula ELSE formula FI .  (reduce by rule 6)
+	function : FUN ID LPAREN ID COLON TYPE ARROW . TYPE RPAREN COLON TYPE ASSIGN expression 
 
+	INT	shift 60
+	BOOL	shift 59
 
-
-	.	reduce by rule 6
-
-
-state 69:
-
-	formula : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE . ASSIGN formula 
-
-	ASSIGN	shift 71
-
+	TYPE	goto 71
 
 	.	error
 
 
+state 69:
+
+	expression : IF expression THEN expression ELSE expression FI .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
 state 70:
 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE . RPAREN COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE . ASSIGN expression 
 
-	RPAREN	shift 72
+	ASSIGN	shift 72
 
 
 	.	error
@@ -1258,117 +1218,141 @@ state 70:
 
 state 71:
 
-	formula : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN . formula 
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE . RPAREN COLON TYPE ASSIGN expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	RPAREN	shift 73
 
-	formula	goto 73
 
 	.	error
 
 
 state 72:
 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN . COLON TYPE ASSIGN formula 
+	function : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN . expression 
 
-	COLON	shift 74
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
+	expression	goto 74
 
 	.	error
 
 
 state 73:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	formula : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula .  (reduce by rule 26)
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN . COLON TYPE ASSIGN expression 
 
+	COLON	shift 75
 
-
-	.	reduce by rule 26
-
-
-state 74:
-
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON . TYPE ASSIGN formula 
-
-	INT	shift 59
-	BOOL	shift 58
-
-	TYPE	goto 75
 
 	.	error
 
 
+state 74:
+
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	function : Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression .  (reduce by rule 9)
+
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+
+
+	.	reduce by rule 9
+
+
 state 75:
 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE . ASSIGN formula 
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON . TYPE ASSIGN expression 
 
-	ASSIGN	shift 76
+	INT	shift 60
+	BOOL	shift 59
 
+	TYPE	goto 76
 
 	.	error
 
 
 state 76:
 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN . formula 
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE . ASSIGN expression 
 
-	TERM	shift 13
-	CONST	shift 12
-	NOT	shift 11
-	IF	shift 10
-	LPAREN	shift 9
-	ID	shift 8
-	NEGATE	shift 7
-	LET	shift 6
-	NUM	shift 5
-	FUN	shift 4
-	Fn	shift 3
+	ASSIGN	shift 77
 
-	formula	goto 77
 
 	.	error
 
 
 state 77:
 
-	formula : formula . IMPLIES formula 
-	formula : formula . AND formula 
-	formula : formula . OR formula 
-	formula : formula . XOR formula 
-	formula : formula . EQUALS formula 
-	formula : formula . LESSTHAN formula 
-	formula : formula . GREATERTHAN formula 
-	formula : formula . PLUS formula 
-	formula : formula . MINUS formula 
-	formula : formula . TIMES formula 
-	formula : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN formula .  (reduce by rule 27)
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN . expression 
 
+	CONST	shift 13
+	NOT	shift 12
+	IF	shift 11
+	LPAREN	shift 10
+	ID	shift 9
+	NEGATE	shift 8
+	LET	shift 7
+	NUM	shift 6
 
+	expression	goto 78
 
-	.	reduce by rule 27
+	.	error
 
 
 state 78:
+
+	expression : expression . IMPLIES expression 
+	expression : expression . AND expression 
+	expression : expression . OR expression 
+	expression : expression . XOR expression 
+	expression : expression . EQUALS expression 
+	expression : expression . LESSTHAN expression 
+	expression : expression . GREATERTHAN expression 
+	expression : expression . PLUS expression 
+	expression : expression . MINUS expression 
+	expression : expression . TIMES expression 
+	function : FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression .  (reduce by rule 8)
+
+	AND	shift 25
+	OR	shift 24
+	XOR	shift 23
+	EQUALS	shift 22
+	IMPLIES	shift 21
+	PLUS	shift 20
+	MINUS	shift 19
+	TIMES	shift 18
+	LESSTHAN	shift 17
+	GREATERTHAN	shift 16
+
+
+	.	reduce by rule 8
+
+
+state 79:
 
 
 	EOF	accept
@@ -1376,5 +1360,5 @@ state 78:
 
 	.	error
 
-208 of 493 action table entries left after compaction
-32 goto table entries
+219 of 461 action table entries left after compaction
+38 goto table entries
