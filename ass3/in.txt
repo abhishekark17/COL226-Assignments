@@ -1,6 +1,1 @@
-fun func (f:int->int):int => (f 1)
-let 
-	f = fn(x:int): int=>x PLUS 1
-in
-	(func f)
-end
+let x = 5 in x TIMES 3 end

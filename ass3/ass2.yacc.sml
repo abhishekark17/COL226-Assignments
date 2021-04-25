@@ -18,35 +18,35 @@ local open LrTable in
 val table=let val actionRows =
 "\
 \\001\000\001\000\000\000\000\000\
-\\001\000\003\000\015\000\004\000\014\000\005\000\027\000\006\000\026\000\
-\\007\000\025\000\008\000\024\000\009\000\023\000\010\000\013\000\
-\\014\000\012\000\015\000\051\000\016\000\011\000\017\000\022\000\
-\\018\000\021\000\019\000\020\000\020\000\010\000\021\000\019\000\
-\\022\000\018\000\023\000\009\000\027\000\008\000\000\000\
-\\001\000\003\000\015\000\004\000\014\000\010\000\013\000\014\000\012\000\
-\\016\000\011\000\020\000\010\000\023\000\009\000\027\000\008\000\000\000\
-\\001\000\003\000\015\000\004\000\014\000\010\000\013\000\014\000\012\000\
-\\016\000\011\000\020\000\010\000\023\000\009\000\027\000\008\000\
-\\028\000\007\000\029\000\006\000\000\000\
+\\001\000\003\000\016\000\004\000\015\000\005\000\027\000\006\000\026\000\
+\\007\000\025\000\008\000\024\000\009\000\023\000\010\000\014\000\
+\\014\000\013\000\015\000\051\000\016\000\012\000\017\000\022\000\
+\\018\000\021\000\019\000\020\000\020\000\011\000\021\000\019\000\
+\\022\000\018\000\023\000\010\000\027\000\009\000\000\000\
+\\001\000\003\000\016\000\004\000\015\000\010\000\014\000\014\000\013\000\
+\\016\000\012\000\020\000\011\000\023\000\010\000\027\000\009\000\000\000\
+\\001\000\003\000\016\000\004\000\015\000\010\000\014\000\014\000\013\000\
+\\016\000\012\000\020\000\011\000\023\000\010\000\027\000\009\000\
+\\028\000\008\000\029\000\007\000\000\000\
 \\001\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
 \\009\000\023\000\011\000\052\000\017\000\022\000\018\000\021\000\
 \\019\000\020\000\021\000\019\000\022\000\018\000\000\000\
 \\001\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
-\\009\000\023\000\012\000\065\000\017\000\022\000\018\000\021\000\
+\\009\000\023\000\012\000\064\000\017\000\022\000\018\000\021\000\
 \\019\000\020\000\021\000\019\000\022\000\018\000\000\000\
 \\001\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
-\\009\000\023\000\013\000\071\000\017\000\022\000\018\000\021\000\
+\\009\000\023\000\013\000\072\000\017\000\022\000\018\000\021\000\
 \\019\000\020\000\021\000\019\000\022\000\018\000\000\000\
 \\001\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
-\\009\000\023\000\015\000\058\000\017\000\022\000\018\000\021\000\
+\\009\000\023\000\015\000\057\000\017\000\022\000\018\000\021\000\
 \\019\000\020\000\021\000\019\000\022\000\018\000\000\000\
 \\001\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
 \\009\000\023\000\017\000\022\000\018\000\021\000\019\000\020\000\
-\\021\000\019\000\022\000\018\000\025\000\064\000\000\000\
+\\021\000\019\000\022\000\018\000\025\000\063\000\000\000\
 \\001\000\014\000\028\000\000\000\
 \\001\000\014\000\047\000\000\000\
-\\001\000\015\000\066\000\000\000\
-\\001\000\015\000\075\000\000\000\
+\\001\000\015\000\066\000\031\000\065\000\000\000\
+\\001\000\015\000\071\000\031\000\065\000\000\000\
 \\001\000\016\000\029\000\000\000\
 \\001\000\016\000\031\000\000\000\
 \\001\000\016\000\046\000\000\000\
@@ -54,36 +54,27 @@ val table=let val actionRows =
 \\001\000\024\000\048\000\000\000\
 \\001\000\026\000\049\000\000\000\
 \\001\000\030\000\053\000\000\000\
-\\001\000\030\000\063\000\000\000\
-\\001\000\030\000\069\000\000\000\
-\\001\000\030\000\077\000\000\000\
-\\001\000\031\000\070\000\000\000\
-\\001\000\032\000\074\000\000\000\
-\\001\000\032\000\079\000\000\000\
-\\001\000\033\000\062\000\034\000\061\000\000\000\
+\\001\000\030\000\062\000\000\000\
+\\001\000\030\000\070\000\000\000\
+\\001\000\030\000\074\000\000\000\
+\\001\000\031\000\065\000\032\000\075\000\000\000\
+\\001\000\031\000\065\000\032\000\078\000\000\000\
+\\001\000\033\000\061\000\034\000\060\000\000\000\
+\\081\000\000\000\
 \\082\000\000\000\
-\\083\000\000\000\
+\\083\000\003\000\016\000\004\000\015\000\010\000\014\000\014\000\013\000\
+\\016\000\012\000\020\000\011\000\023\000\010\000\027\000\009\000\
+\\028\000\008\000\029\000\007\000\000\000\
 \\084\000\000\000\
-\\085\000\003\000\015\000\004\000\014\000\005\000\027\000\006\000\026\000\
-\\007\000\025\000\008\000\024\000\009\000\023\000\010\000\013\000\
-\\014\000\012\000\016\000\011\000\017\000\022\000\018\000\021\000\
-\\019\000\020\000\020\000\010\000\021\000\019\000\022\000\018\000\
-\\023\000\009\000\027\000\008\000\028\000\007\000\029\000\006\000\000\000\
-\\085\000\003\000\015\000\004\000\014\000\010\000\013\000\014\000\012\000\
-\\016\000\011\000\020\000\010\000\023\000\009\000\027\000\008\000\
-\\028\000\007\000\029\000\006\000\000\000\
-\\086\000\000\000\
-\\087\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
+\\085\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
 \\009\000\023\000\017\000\022\000\018\000\021\000\019\000\020\000\
 \\021\000\019\000\022\000\018\000\000\000\
+\\086\000\000\000\
+\\087\000\031\000\065\000\000\000\
 \\088\000\000\000\
 \\089\000\000\000\
-\\090\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
-\\009\000\023\000\017\000\022\000\018\000\021\000\019\000\020\000\
-\\021\000\019\000\022\000\018\000\000\000\
-\\091\000\005\000\027\000\006\000\026\000\007\000\025\000\008\000\024\000\
-\\009\000\023\000\017\000\022\000\018\000\021\000\019\000\020\000\
-\\021\000\019\000\022\000\018\000\000\000\
+\\090\000\000\000\
+\\091\000\000\000\
 \\092\000\000\000\
 \\093\000\009\000\023\000\000\000\
 \\094\000\009\000\023\000\000\000\
@@ -112,42 +103,43 @@ val table=let val actionRows =
 \\110\000\000\000\
 \"
 val actionRowNumbers =
-"\031\000\031\000\027\000\030\000\
-\\009\000\013\000\055\000\014\000\
-\\002\000\047\000\002\000\002\000\
-\\002\000\046\000\028\000\029\000\
+"\028\000\029\000\026\000\028\000\
+\\030\000\009\000\013\000\054\000\
+\\014\000\002\000\046\000\002\000\
+\\002\000\002\000\045\000\027\000\
 \\002\000\002\000\002\000\002\000\
 \\002\000\002\000\002\000\002\000\
 \\002\000\002\000\015\000\010\000\
-\\017\000\018\000\053\000\001\000\
-\\004\000\044\000\050\000\049\000\
-\\054\000\052\000\051\000\039\000\
-\\043\000\042\000\041\000\040\000\
+\\017\000\018\000\052\000\001\000\
+\\004\000\043\000\049\000\048\000\
+\\053\000\051\000\050\000\038\000\
+\\042\000\041\000\040\000\039\000\
 \\019\000\016\000\002\000\003\000\
-\\007\000\045\000\002\000\026\000\
-\\020\000\008\000\032\000\033\000\
-\\056\000\005\000\011\000\035\000\
-\\034\000\026\000\048\000\002\000\
-\\021\000\023\000\006\000\026\000\
-\\026\000\038\000\024\000\012\000\
-\\002\000\022\000\037\000\026\000\
-\\025\000\002\000\036\000\000\000"
+\\007\000\044\000\002\000\025\000\
+\\020\000\008\000\031\000\055\000\
+\\005\000\011\000\034\000\033\000\
+\\025\000\047\000\002\000\025\000\
+\\021\000\012\000\006\000\032\000\
+\\025\000\022\000\037\000\023\000\
+\\025\000\003\000\024\000\036\000\
+\\003\000\035\000\000\000"
 val gotoT =
 "\
-\\001\000\003\000\002\000\079\000\003\000\002\000\006\000\001\000\000\000\
-\\001\000\003\000\003\000\014\000\006\000\001\000\000\000\
-\\000\000\
-\\001\000\003\000\003\000\015\000\006\000\001\000\000\000\
+\\001\000\004\000\002\000\003\000\003\000\078\000\004\000\002\000\
+\\007\000\001\000\000\000\
 \\000\000\
 \\000\000\
+\\001\000\004\000\002\000\003\000\004\000\015\000\007\000\001\000\000\000\
 \\000\000\
-\\004\000\028\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\005\000\028\000\000\000\
 \\001\000\030\000\000\000\
 \\000\000\
 \\001\000\031\000\000\000\
 \\001\000\032\000\000\000\
 \\001\000\033\000\000\000\
-\\000\000\
 \\000\000\
 \\000\000\
 \\001\000\034\000\000\000\
@@ -181,42 +173,41 @@ val gotoT =
 \\000\000\
 \\000\000\
 \\001\000\053\000\000\000\
-\\001\000\055\000\006\000\054\000\000\000\
+\\001\000\004\000\002\000\054\000\007\000\001\000\000\000\
 \\000\000\
 \\000\000\
-\\001\000\057\000\000\000\
-\\005\000\058\000\000\000\
-\\000\000\
-\\000\000\
-\\000\000\
+\\001\000\056\000\000\000\
+\\006\000\057\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
-\\005\000\065\000\000\000\
+\\000\000\
+\\000\000\
+\\006\000\065\000\000\000\
 \\000\000\
 \\001\000\066\000\000\000\
+\\006\000\067\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
-\\005\000\070\000\000\000\
-\\005\000\071\000\000\000\
+\\000\000\
+\\006\000\071\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
-\\001\000\074\000\000\000\
+\\006\000\074\000\000\000\
+\\001\000\004\000\002\000\075\000\007\000\001\000\000\000\
 \\000\000\
 \\000\000\
-\\005\000\076\000\000\000\
-\\000\000\
-\\001\000\078\000\000\000\
+\\001\000\004\000\002\000\077\000\007\000\001\000\000\000\
 \\000\000\
 \\000\000\
 \"
-val numstates = 80
-val numrules = 29
+val numstates = 79
+val numrules = 30
 val s = ref "" and index = ref 0
 val string_to_int = fn () => 
 let val i = !index
@@ -284,6 +275,7 @@ datatype svalue = VOID | ntVOID of unit ->  unit
  | TYPE of unit ->  (AST.Type) | DECL of unit ->  (AST.decl)
  | statement of unit ->  (AST.statement)
  | program of unit ->  (AST.statement)
+ | formula of unit ->  (AST.formula)
  | expression of unit ->  (AST.exp)
 end
 type svalue = MlyValue.svalue
@@ -359,86 +351,89 @@ statement1right)) :: rest671)) => let val  result = MlyValue.program
  (fn _ => let val  (statement as statement1) = statement1 ()
  in (statement)
 end)
- in ( LrTable.NT 1, ( result, statement1left, statement1right), 
+ in ( LrTable.NT 2, ( result, statement1left, statement1right), 
 rest671)
 end
 |  ( 1, ( ( _, ( MlyValue.statement statement1, _, statement1right))
- :: ( _, ( MlyValue.function function1, function1left, _)) :: rest671)
-) => let val  result = MlyValue.statement (fn _ => let val  (function
- as function1) = function1 ()
+ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671))
+ => let val  result = MlyValue.statement (fn _ => let val  (formula
+ as formula1) = formula1 ()
  val  (statement as statement1) = statement1 ()
- in (AST.FunctionStatement(function,statement))
+ in (AST.Statement(formula,statement))
 end)
- in ( LrTable.NT 2, ( result, function1left, statement1right), rest671
-)
+ in ( LrTable.NT 3, ( result, formula1left, statement1right), rest671)
+
 end
-|  ( 2, ( ( _, ( MlyValue.statement statement1, _, statement1right))
- :: ( _, ( MlyValue.expression expression1, expression1left, _)) :: 
-rest671)) => let val  result = MlyValue.statement (fn _ => let val  (
-expression as expression1) = expression1 ()
- val  (statement as statement1) = statement1 ()
- in (AST.ExpressionStatement(expression,statement))
+|  ( 2, ( rest671)) => let val  result = MlyValue.statement (fn _ => (
+AST.EOS))
+ in ( LrTable.NT 3, ( result, defaultPos, defaultPos), rest671)
+end
+|  ( 3, ( ( _, ( MlyValue.function function1, function1left, 
+function1right)) :: rest671)) => let val  result = MlyValue.formula
+ (fn _ => let val  (function as function1) = function1 ()
+ in (AST.Function(function))
 end)
- in ( LrTable.NT 2, ( result, expression1left, statement1right), 
+ in ( LrTable.NT 1, ( result, function1left, function1right), rest671)
+
+end
+|  ( 4, ( ( _, ( MlyValue.expression expression1, expression1left, 
+expression1right)) :: rest671)) => let val  result = MlyValue.formula
+ (fn _ => let val  (expression as expression1) = expression1 ()
+ in (AST.Expression(expression))
+end)
+ in ( LrTable.NT 1, ( result, expression1left, expression1right), 
 rest671)
 end
-|  ( 3, ( rest671)) => let val  result = MlyValue.statement (fn _ => (
-AST.EndOfFile))
- in ( LrTable.NT 2, ( result, defaultPos, defaultPos), rest671)
-end
-|  ( 4, ( ( _, ( MlyValue.function function1, _, function1right)) :: _
- :: ( _, ( MlyValue.ID ID1, ID1left, _)) :: rest671)) => let val  
-result = MlyValue.DECL (fn _ => let val  (ID as ID1) = ID1 ()
- val  (function as function1) = function1 ()
- in (AST.ValDeclFunc(ID,function))
+|  ( 5, ( ( _, ( MlyValue.formula formula1, _, formula1right)) :: _ ::
+ ( _, ( MlyValue.ID ID1, ID1left, _)) :: rest671)) => let val  result
+ = MlyValue.DECL (fn _ => let val  (ID as ID1) = ID1 ()
+ val  (formula as formula1) = formula1 ()
+ in (AST.ValDecl(ID,formula))
 end)
- in ( LrTable.NT 3, ( result, ID1left, function1right), rest671)
+ in ( LrTable.NT 4, ( result, ID1left, formula1right), rest671)
 end
-|  ( 5, ( ( _, ( MlyValue.expression expression1, _, expression1right)
-) :: _ :: ( _, ( MlyValue.ID ID1, ID1left, _)) :: rest671)) => let
- val  result = MlyValue.DECL (fn _ => let val  (ID as ID1) = ID1 ()
- val  (expression as expression1) = expression1 ()
- in (AST.ValDeclExp(ID,expression))
+|  ( 6, ( ( _, ( MlyValue.TYPE TYPE2, _, TYPE2right)) :: _ :: ( _, ( 
+MlyValue.TYPE TYPE1, TYPE1left, _)) :: rest671)) => let val  result = 
+MlyValue.TYPE (fn _ => let val  TYPE1 = TYPE1 ()
+ val  TYPE2 = TYPE2 ()
+ in (AST.Arrow(TYPE1,TYPE2))
 end)
- in ( LrTable.NT 3, ( result, ID1left, expression1right), rest671)
+ in ( LrTable.NT 5, ( result, TYPE1left, TYPE2right), rest671)
 end
-|  ( 6, ( ( _, ( _, INT1left, INT1right)) :: rest671)) => let val  
+|  ( 7, ( ( _, ( _, INT1left, INT1right)) :: rest671)) => let val  
 result = MlyValue.TYPE (fn _ => (AST.INT))
- in ( LrTable.NT 4, ( result, INT1left, INT1right), rest671)
+ in ( LrTable.NT 5, ( result, INT1left, INT1right), rest671)
 end
-|  ( 7, ( ( _, ( _, BOOL1left, BOOL1right)) :: rest671)) => let val  
+|  ( 8, ( ( _, ( _, BOOL1left, BOOL1right)) :: rest671)) => let val  
 result = MlyValue.TYPE (fn _ => (AST.BOOL))
- in ( LrTable.NT 4, ( result, BOOL1left, BOOL1right), rest671)
+ in ( LrTable.NT 5, ( result, BOOL1left, BOOL1right), rest671)
 end
-|  ( 8, ( ( _, ( MlyValue.expression expression1, _, expression1right)
-) :: _ :: ( _, ( MlyValue.TYPE TYPE3, _, _)) :: _ :: _ :: ( _, ( 
-MlyValue.TYPE TYPE2, _, _)) :: _ :: ( _, ( MlyValue.TYPE TYPE1, _, _))
- :: _ :: ( _, ( MlyValue.ID ID2, _, _)) :: _ :: ( _, ( MlyValue.ID ID1
-, _, _)) :: ( _, ( _, FUN1left, _)) :: rest671)) => let val  result = 
-MlyValue.function (fn _ => let val  ID1 = ID1 ()
+|  ( 9, ( ( _, ( MlyValue.formula formula1, _, formula1right)) :: _ ::
+ ( _, ( MlyValue.TYPE TYPE2, _, _)) :: _ :: _ :: ( _, ( MlyValue.TYPE 
+TYPE1, _, _)) :: _ :: ( _, ( MlyValue.ID ID2, _, _)) :: _ :: ( _, ( 
+MlyValue.ID ID1, _, _)) :: ( _, ( _, FUN1left, _)) :: rest671)) => let
+ val  result = MlyValue.function (fn _ => let val  ID1 = ID1 ()
  val  ID2 = ID2 ()
  val  TYPE1 = TYPE1 ()
  val  TYPE2 = TYPE2 ()
- val  TYPE3 = TYPE3 ()
- val  (expression as expression1) = expression1 ()
- in (AST.Fun(ID1,ID2,AST.Arrow(TYPE1,TYPE2),TYPE3,expression))
+ val  (formula as formula1) = formula1 ()
+ in (AST.Fun(ID1,ID2,TYPE1,TYPE2,formula))
 end)
- in ( LrTable.NT 5, ( result, FUN1left, expression1right), rest671)
-
+ in ( LrTable.NT 6, ( result, FUN1left, formula1right), rest671)
 end
-|  ( 9, ( ( _, ( MlyValue.expression expression1, _, expression1right)
-) :: _ :: ( _, ( MlyValue.TYPE TYPE2, _, _)) :: _ :: _ :: ( _, ( 
+|  ( 10, ( ( _, ( MlyValue.formula formula1, _, formula1right)) :: _
+ :: ( _, ( MlyValue.TYPE TYPE2, _, _)) :: _ :: _ :: ( _, ( 
 MlyValue.TYPE TYPE1, _, _)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) ::
  _ :: ( _, ( _, Fn1left, _)) :: rest671)) => let val  result = 
 MlyValue.function (fn _ => let val  (ID as ID1) = ID1 ()
  val  TYPE1 = TYPE1 ()
  val  TYPE2 = TYPE2 ()
- val  (expression as expression1) = expression1 ()
- in (AST.Fn(ID,TYPE1,TYPE2,expression))
+ val  (formula as formula1) = formula1 ()
+ in (AST.Fn(ID,TYPE1,TYPE2,formula))
 end)
- in ( LrTable.NT 5, ( result, Fn1left, expression1right), rest671)
+ in ( LrTable.NT 6, ( result, Fn1left, formula1right), rest671)
 end
-|  ( 10, ( ( _, ( _, _, FI1right)) :: ( _, ( MlyValue.expression 
+|  ( 11, ( ( _, ( _, _, FI1right)) :: ( _, ( MlyValue.expression 
 expression3, _, _)) :: _ :: ( _, ( MlyValue.expression expression2, _,
  _)) :: _ :: ( _, ( MlyValue.expression expression1, _, _)) :: ( _, (
  _, IF1left, _)) :: rest671)) => let val  result = MlyValue.expression
@@ -449,7 +444,7 @@ expression3, _, _)) :: _ :: ( _, ( MlyValue.expression expression2, _,
 end)
  in ( LrTable.NT 0, ( result, IF1left, FI1right), rest671)
 end
-|  ( 11, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 12, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -459,7 +454,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 12, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 13, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -469,7 +464,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 13, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 14, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -479,7 +474,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 14, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 15, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -489,7 +484,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 15, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 16, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -499,7 +494,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 16, ( ( _, ( MlyValue.expression expression1, _, expression1right
+|  ( 17, ( ( _, ( MlyValue.expression expression1, _, expression1right
 )) :: ( _, ( _, NOT1left, _)) :: rest671)) => let val  result = 
 MlyValue.expression (fn _ => let val  (expression as expression1) = 
 expression1 ()
@@ -508,7 +503,7 @@ end)
  in ( LrTable.NT 0, ( result, NOT1left, expression1right), rest671)
 
 end
-|  ( 17, ( ( _, ( _, _, RPAREN1right)) :: ( _, ( MlyValue.expression 
+|  ( 18, ( ( _, ( _, _, RPAREN1right)) :: ( _, ( MlyValue.expression 
 expression1, _, _)) :: ( _, ( _, LPAREN1left, _)) :: rest671)) => let
  val  result = MlyValue.expression (fn _ => let val  (expression as 
 expression1) = expression1 ()
@@ -516,21 +511,21 @@ expression1) = expression1 ()
 end)
  in ( LrTable.NT 0, ( result, LPAREN1left, RPAREN1right), rest671)
 end
-|  ( 18, ( ( _, ( MlyValue.CONST CONST1, CONST1left, CONST1right)) :: 
+|  ( 19, ( ( _, ( MlyValue.CONST CONST1, CONST1left, CONST1right)) :: 
 rest671)) => let val  result = MlyValue.expression (fn _ => let val  (
 CONST as CONST1) = CONST1 ()
  in (AST.Const(CONST))
 end)
  in ( LrTable.NT 0, ( result, CONST1left, CONST1right), rest671)
 end
-|  ( 19, ( ( _, ( MlyValue.ID ID1, ID1left, ID1right)) :: rest671)) =>
+|  ( 20, ( ( _, ( MlyValue.ID ID1, ID1left, ID1right)) :: rest671)) =>
  let val  result = MlyValue.expression (fn _ => let val  (ID as ID1) =
  ID1 ()
  in (AST.VarExp(ID))
 end)
  in ( LrTable.NT 0, ( result, ID1left, ID1right), rest671)
 end
-|  ( 20, ( ( _, ( _, _, END1right)) :: ( _, ( MlyValue.expression 
+|  ( 21, ( ( _, ( _, _, END1right)) :: ( _, ( MlyValue.expression 
 expression1, _, _)) :: _ :: ( _, ( MlyValue.DECL DECL1, _, _)) :: ( _,
  ( _, LET1left, _)) :: rest671)) => let val  result = 
 MlyValue.expression (fn _ => let val  (DECL as DECL1) = DECL1 ()
@@ -539,7 +534,7 @@ MlyValue.expression (fn _ => let val  (DECL as DECL1) = DECL1 ()
 end)
  in ( LrTable.NT 0, ( result, LET1left, END1right), rest671)
 end
-|  ( 21, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 22, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -549,7 +544,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 22, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 23, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -559,7 +554,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 23, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 24, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -569,7 +564,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 24, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 25, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -579,7 +574,7 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 25, ( ( _, ( MlyValue.expression expression1, _, expression1right
+|  ( 26, ( ( _, ( MlyValue.expression expression1, _, expression1right
 )) :: ( _, ( _, NEGATE1left, _)) :: rest671)) => let val  result = 
 MlyValue.expression (fn _ => let val  (expression as expression1) = 
 expression1 ()
@@ -588,7 +583,7 @@ end)
  in ( LrTable.NT 0, ( result, NEGATE1left, expression1right), rest671)
 
 end
-|  ( 26, ( ( _, ( MlyValue.expression expression2, _, expression2right
+|  ( 27, ( ( _, ( MlyValue.expression expression2, _, expression2right
 )) :: _ :: ( _, ( MlyValue.expression expression1, expression1left, _)
 ) :: rest671)) => let val  result = MlyValue.expression (fn _ => let
  val  expression1 = expression1 ()
@@ -598,14 +593,14 @@ end)
  in ( LrTable.NT 0, ( result, expression1left, expression2right), 
 rest671)
 end
-|  ( 27, ( ( _, ( MlyValue.NUM NUM1, NUM1left, NUM1right)) :: rest671)
+|  ( 28, ( ( _, ( MlyValue.NUM NUM1, NUM1left, NUM1right)) :: rest671)
 ) => let val  result = MlyValue.expression (fn _ => let val  (NUM as 
 NUM1) = NUM1 ()
  in (AST.NumExp(NUM))
 end)
  in ( LrTable.NT 0, ( result, NUM1left, NUM1right), rest671)
 end
-|  ( 28, ( ( _, ( _, _, RPAREN1right)) :: ( _, ( MlyValue.expression 
+|  ( 29, ( ( _, ( _, _, RPAREN1right)) :: ( _, ( MlyValue.expression 
 expression2, _, _)) :: ( _, ( MlyValue.expression expression1, _, _))
  :: ( _, ( _, LPAREN1left, _)) :: rest671)) => let val  result = 
 MlyValue.expression (fn _ => let val  expression1 = expression1 ()

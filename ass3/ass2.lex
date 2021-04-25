@@ -63,7 +63,7 @@ digit=[0-9];
 "int"		=>(lexeroutput:= ("INT \"INT\"",(!linenum),(!cpos))::(!lexeroutput);increase (cpos,3);Tokens.INT(!linenum,!cpos));
 "bool"		=>(lexeroutput:= ("BOOL \"BOOL\"",(!linenum),(!cpos))::(!lexeroutput);increase (cpos,4);Tokens.BOOL(!linenum,!cpos));
 
-{alpha}+	=>(lexeroutput:= ("ID \""^yytext^"\"",(!linenum),(!cpos))::(!lexeroutput);increase (cpos,size(yytext));Tokens.ID(yytext,!linenum,!cpos));
+({alpha}({alpha}|{digit})*)	=>(lexeroutput:= ("ID \""^yytext^"\"",(!linenum),(!cpos))::(!lexeroutput);increase (cpos,size(yytext));Tokens.ID(yytext,!linenum,!cpos));
 
 .		=>(error (yytext,!linenum,!cpos);increase (cpos,size(yytext));
 					lex());

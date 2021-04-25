@@ -12,7 +12,7 @@
   | PLUS | MINUS | TIMES | NEGATE | LESSTHAN | GREATERTHAN
   | LET | IN | END | EQ | NUM of int | FUN | Fn | COLON | ARROW | ASSIGN | INT | BOOL
 
-%nonterm expression of AST.exp | program of AST.statement| statement of AST.statement | DECL of AST.decl | TYPE of AST.Type | function of AST.function
+%nonterm expression of AST.exp | formula of AST.formula | program of AST.statement| statement of AST.statement | DECL of AST.decl | TYPE of AST.Type | function of AST.function 
 
 %pos int 
 
@@ -29,7 +29,8 @@
 %left AND OR XOR EQUALS LESSTHAN GREATERTHAN
 %right IMPLIES
 %right IF THEN ELSE
-%nonassoc EQ INT BOOL FUN Fn COLON ARROW ASSIGN 
+%right ARROW
+%nonassoc EQ INT BOOL FUN Fn COLON ASSIGN
 
 (* %right *)
 (* %nonassoc*)
@@ -40,19 +41,20 @@
 %%
 program: statement (statement)
 
-statement: function statement(AST.FunctionStatement(function,statement))
-		| expression statement(AST.ExpressionStatement(expression,statement))
-		| (AST.EndOfFile)
+statement: formula statement(AST.Statement(formula,statement))
+		| (AST.EOS)
 
-DECL: ID EQ function(AST.ValDeclFunc(ID,function))
-	| ID EQ expression(AST.ValDeclExp(ID,expression))
+formula: function (AST.Function(function))
+		| expression (AST.Expression(expression))
 
-TYPE: INT (AST.INT)
+DECL: ID EQ formula(AST.ValDecl(ID,formula))
+
+TYPE: TYPE ARROW TYPE (AST.Arrow(TYPE1,TYPE2))
+	| INT (AST.INT)
 	| BOOL (AST.BOOL)
 
-function: FUN ID LPAREN ID COLON TYPE ARROW TYPE RPAREN COLON TYPE ASSIGN expression (AST.Fun(ID1,ID2,AST.Arrow(TYPE1,TYPE2),TYPE3,expression))
-		| Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression(AST.Fn(ID,TYPE1,TYPE2,expression))
-
+function: FUN ID LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula (AST.Fun(ID1,ID2,TYPE1,TYPE2,formula))
+		| Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula(AST.Fn(ID,TYPE1,TYPE2,formula))
 	
 expression: IF expression THEN expression ELSE expression FI(AST.IfElseThen(expression1,expression2,expression3))
 	|expression IMPLIES expression (AST.BinExp(AST.Implies,expression1,expression2))

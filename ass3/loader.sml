@@ -1,6 +1,7 @@
 CM.make("$/basis.cm");
 CM.make("$/ml-yacc-lib.cm");
 use "AST.sml";
+use "evaluator.sml";
 use "ass2.yacc.sig";
 use "ass2.yacc.sml";
 use "ass2.lex.sml";
