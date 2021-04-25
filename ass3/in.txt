@@ -1,1 +1,1 @@
-let x = 5 in x TIMES 3 end
+3 MINUS 2 PLUS 3 TIMES TRUE;

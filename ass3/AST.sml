@@ -1,7 +1,7 @@
 structure AST =
 struct
 type id  = string
-
+(* type statement = (formula) list *)
 datatype binop = Implies | And | OR | Xor | Equals | LESSTHAN | GREATERTHAN | Plus | Minus |Times
 datatype uniop = Not | Negate
 datatype Type = INT | BOOL | Arrow of Type*Type
@@ -11,8 +11,8 @@ datatype program = Program of statement
 and formula = Expression of exp | Function of function
 and statement = Statement of formula*statement | EOS
 and decl = ValDecl of id*formula
-and function = Fn of id*Type*Type*formula | Fun of id*id*Type*Type*formula
-and  exp = IfElseThen of exp * exp * exp
+and function = Fn of id*Type*Type*exp | Fun of id*id*Type*Type*exp
+and  exp = IfElseThen of exp * exp * exp | TERM
 | BinExp of binop*exp*exp
 | UnaryExp of uniop*exp
 (* | BracketExp of Paren*exp*Paren *)
@@ -20,22 +20,23 @@ and  exp = IfElseThen of exp * exp * exp
 | VarExp of id
 | LetExp of decl*exp
 | NumExp of int
-| AppExp of exp*exp
-| EndOfStatement
+| AppExp of id*exp 
+
 
 
 
 datatype value = IntVal of int
                 (* | StringVal of string *)
 	            | BoolVal of bool
-                | funcVal of id*Type*Type*formula
+                | funcVal of id*Type*Type*exp
+                | nullValue
                 (* | statementList of (value) list *)
 				
 type environment = (id * value) list
 
 type envtype = (id*Type) list
 
-type statementList = (value) list
+datatype statementList = List of value*statementList | End
 
 fun envAdd (var:id, v:value, env:environment) = 
     (var,v)::env

@@ -53,8 +53,8 @@ TYPE: TYPE ARROW TYPE (AST.Arrow(TYPE1,TYPE2))
 	| INT (AST.INT)
 	| BOOL (AST.BOOL)
 
-function: FUN ID LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula (AST.Fun(ID1,ID2,TYPE1,TYPE2,formula))
-		| Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN formula(AST.Fn(ID,TYPE1,TYPE2,formula))
+function: FUN ID LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression (AST.Fun(ID1,ID2,TYPE1,TYPE2,expression))
+		| Fn LPAREN ID COLON TYPE RPAREN COLON TYPE ASSIGN expression (AST.Fn(ID,TYPE1,TYPE2,expression))
 	
 expression: IF expression THEN expression ELSE expression FI(AST.IfElseThen(expression1,expression2,expression3))
 	|expression IMPLIES expression (AST.BinExp(AST.Implies,expression1,expression2))
@@ -66,6 +66,7 @@ expression: IF expression THEN expression ELSE expression FI(AST.IfElseThen(expr
 	|LPAREN expression RPAREN (expression)
 	|CONST (AST.Const(CONST))
 	|ID (AST.VarExp(ID))
+	|TERM (AST.TERM)
 	|LET DECL IN expression END(AST.LetExp(DECL,expression))
 	|expression LESSTHAN expression (AST.BinExp(AST.LESSTHAN,expression1,expression2))
 	|expression GREATERTHAN expression (AST.BinExp(AST.GREATERTHAN,expression1,expression2))
@@ -74,5 +75,5 @@ expression: IF expression THEN expression ELSE expression FI(AST.IfElseThen(expr
 	|NEGATE expression (AST.UnaryExp(AST.Negate,expression))
 	|expression TIMES expression (AST.BinExp(AST.Times,expression1,expression2))
 	|NUM (AST.NumExp(NUM))
-	|LPAREN expression expression RPAREN (AST.AppExp(expression1,expression2))
+	|LPAREN ID expression RPAREN (AST.AppExp(ID,expression))
 	
