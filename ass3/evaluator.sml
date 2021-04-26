@@ -4,7 +4,12 @@ open AST
 
 val brokenTypes = Fail "Error in evaluation!" 
 val TypeNotMatching = Fail "Types donot match"
-
+val functionTypeError = Fail "Function type declaration and argument Do Not Match"
+val notFunctionError = Fail "Given id is not a function"
+val thenElseError = Fail "Type Inside Then and Else are not same"
+val valueInsideIfIsNotBoolean = Fail "Value inside If Does Not evaluate to bool"
+val functionApplicationError = Fail "Argument to a function Cannot Be function during Application" 
+ 
 fun evalStatement(sta:statement,env:environment) = (* is a type statementList *)
     case (sta) of 
         Statement(f,s) => let val (formVal,envi) = evalFormula(f,env) 
@@ -80,17 +85,17 @@ evalUnaryExp(uni:uniop, e:exp, env:environment):value = (*this value can only be
 case (uni,evalExp(e,env)) of 
     (Not, BoolVal b) => BoolVal (not b)
     |(Negate, IntVal i) => IntVal (~i)
-    | _ => raise brokenTypes
+    | _ => raise TypeNotMatching
 
-and 
+(* and 
 
-(* convertToBool(s:string):value = (*this value can only be of type boolval*)
+convertToBool(s:string):value = (*this value can only be of type boolval*)
 case s of 
     "TRUE" => BoolVal true
     | "FALSE" => BoolVal false 
-    | _ => raise brokenTypes
+    | _ => raise brokenTypes *)
 
-and  *)
+and 
 
 evalLetExp (decl:decl, e2:exp, env:environment): value = (*this value can only be of type intval or boolval*)
 case decl of 
@@ -116,17 +121,33 @@ evalAppExp(id1:id,e2:exp,env:environment):value = (*this value can only be of ty
         val v2 = evalExp(e2,env) (*This gives value of e2 IntVal or BoolVal or funcVal*)
     in
         case v1 of 
-            funcVal (id2,type1,type2,ex) => evalExp(ex,envAdd(id2,v2,env))
-            | _ => raise brokenTypes
+            funcVal (argument,typeOfargument,returnType,ex) => if(typeCheck(returnType,evalExp(ex,envAdd(argument,v2,env)))) 
+                                            then evalExp(ex,envAdd(argument,v2,env)) else raise functionTypeError
+            | _ => raise notFunctionError
     end
 
 
 and
+
+typeCheck(type1:Type,v1:value) = 
+    case v1 of 
+        IntVal _ => (type1=INT)
+        | BoolVal _ => (type1=BOOL)
+        | _ => raise functionApplicationError
+
+and 
 evalIF(e1:exp,e2:exp,e3:exp, env:environment):value = (* contains Intval or BoolVal*)
-    case(evalExp(e1,env),evalExp(e2,env),evalExp(e3,env)) of 
-        (BoolVal x,IntVal i1,IntVal i2)=> if x then IntVal i1 else IntVal i2
-        | (BoolVal x,BoolVal b1,BoolVal b2)=> if x then BoolVal b1 else BoolVal b2
-        | _ => raise brokenTypes
+    case(evalExp(e1,env)) of 
+        BoolVal bx => (if(bx=true) then (case (evalExp(e2,env),evalExp(e3,env)) of  
+                            (BoolVal b1,BoolVal b2) => BoolVal b1 
+                            | (IntVal i1,IntVal i2) => IntVal i1
+                            | _ => raise thenElseError)
+                            else (case (evalExp(e2,env),evalExp(e3,env)) of  
+                            (BoolVal b1,BoolVal b2) => BoolVal b2 
+                            | (IntVal i1,IntVal i2) => IntVal i2
+                            | _ => raise thenElseError))
+        | _ => raise valueInsideIfIsNotBoolean 
+         
         
 
 

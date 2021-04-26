@@ -1,1 +1,4 @@
-3 MINUS 2 PLUS 3 TIMES TRUE;
+3 TIMES 2 MINUS 3 PLUS 8;
+3 MINUS 2 PLUS 4 TIMES 8;
+let x=5 in 3 MINUS x end;
+let x=3 in 2 TIMES x end

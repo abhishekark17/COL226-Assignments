@@ -492,16 +492,9 @@ state 31:
 	expression : NEGATE expression .  (reduce by rule 27)
 	expression : expression . TIMES expression 
 
-	AND	shift 26
-	OR	shift 25
-	XOR	shift 24
-	EQUALS	shift 23
-	IMPLIES	shift 22
 	PLUS	shift 21
 	MINUS	shift 20
 	TIMES	shift 19
-	LESSTHAN	shift 18
-	GREATERTHAN	shift 17
 
 
 	.	reduce by rule 27
@@ -601,13 +594,9 @@ state 35:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	AND	shift 26
-	OR	shift 25
-	XOR	shift 24
-	EQUALS	shift 23
-	IMPLIES	shift 22
-	LESSTHAN	shift 18
-	GREATERTHAN	shift 17
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 17
@@ -627,7 +616,9 @@ state 36:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 24
@@ -647,7 +638,9 @@ state 37:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 23
@@ -667,15 +660,6 @@ state 38:
 	expression : expression . TIMES expression 
 	expression : expression TIMES expression .  (reduce by rule 28)
 
-	AND	shift 26
-	OR	shift 25
-	XOR	shift 24
-	EQUALS	shift 23
-	IMPLIES	shift 22
-	PLUS	shift 21
-	MINUS	shift 20
-	LESSTHAN	shift 18
-	GREATERTHAN	shift 17
 
 
 	.	reduce by rule 28
@@ -695,13 +679,7 @@ state 39:
 	expression : expression MINUS expression .  (reduce by rule 26)
 	expression : expression . TIMES expression 
 
-	AND	shift 26
-	OR	shift 25
-	XOR	shift 24
-	EQUALS	shift 23
-	IMPLIES	shift 22
-	LESSTHAN	shift 18
-	GREATERTHAN	shift 17
+	TIMES	shift 19
 
 
 	.	reduce by rule 26
@@ -721,13 +699,7 @@ state 40:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	AND	shift 26
-	OR	shift 25
-	XOR	shift 24
-	EQUALS	shift 23
-	IMPLIES	shift 22
-	LESSTHAN	shift 18
-	GREATERTHAN	shift 17
+	TIMES	shift 19
 
 
 	.	reduce by rule 25
@@ -747,7 +719,16 @@ state 41:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
+	AND	shift 26
+	OR	shift 25
+	XOR	shift 24
+	EQUALS	shift 23
 	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
+	LESSTHAN	shift 18
+	GREATERTHAN	shift 17
 
 
 	.	reduce by rule 12
@@ -767,7 +748,9 @@ state 42:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 16
@@ -787,7 +770,9 @@ state 43:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 15
@@ -807,7 +792,9 @@ state 44:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 14
@@ -827,7 +814,9 @@ state 45:
 	expression : expression . MINUS expression 
 	expression : expression . TIMES expression 
 
-	IMPLIES	shift 22
+	PLUS	shift 21
+	MINUS	shift 20
+	TIMES	shift 19
 
 
 	.	reduce by rule 13
@@ -1369,5 +1358,5 @@ state 80:
 
 	.	error
 
-216 of 469 action table entries left after compaction
+205 of 458 action table entries left after compaction
 38 goto table entries
