@@ -43,7 +43,7 @@ evalFn(id1:id,type1:Type,type2:Type,ex:exp,env:environment) = (* funcVal, env*)
 
 and 
 
-evalFun(id1:id,id2:id,type2:Type,type1:Type,ex:exp,env:environment) = (*funcVal, env*)
+evalFun(id1:id,id2:id,type1:Type,type2:Type,ex:exp,env:environment) = (*funcVal, env*)
         (funcVal (id2,type1,type2,ex),envAdd(id1,funcVal (id2,type1,type2,ex),env)) 
 
 
@@ -121,19 +121,20 @@ evalAppExp(id1:id,e2:exp,env:environment):value = (*this value can only be of ty
         val v2 = evalExp(e2,env) (*This gives value of e2 IntVal or BoolVal or funcVal*)
     in
         case v1 of 
-            funcVal (argument,typeOfargument,returnType,ex) => if(typeCheck(returnType,evalExp(ex,envAdd(argument,v2,env)))) 
+            funcVal (argument,typeOfargument,returnType,ex) => if(typeCheck(returnType ,evalExp(ex,envAdd(argument,v2,env)),envAdd(argument,v2,env)) andalso typeCheck(typeOfargument,envLookup(argument,envAdd(argument,v2,env)),envAdd(argument,v2,env))) 
                                             then evalExp(ex,envAdd(argument,v2,env)) else raise functionTypeError
-            | _ => raise notFunctionError
+            | _ => raise notFunctionError 
     end
 
 
 and
 
-typeCheck(type1:Type,v1:value) = 
-    case v1 of 
-        IntVal _ => (type1=INT)
-        | BoolVal _ => (type1=BOOL)
-        | _ => raise functionApplicationError
+typeCheck(type1:Type,v1:value,env:environment) = 
+    case (type1,v1) of 
+        (INT,IntVal _ ) => true
+        |(BOOL,BoolVal _ ) => true
+        |(Arrow(t1,t2),funcVal(argument1,typeOfargument1,returnType1,ex1)) => (t1=typeOfargument1 andalso t2=returnType1)
+        | _ => raise functionTypeError
 
 and 
 evalIF(e1:exp,e2:exp,e3:exp, env:environment):value = (* contains Intval or BoolVal*)
