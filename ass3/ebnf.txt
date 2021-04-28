@@ -1,0 +1,90 @@
+program		::= statement.
+
+statement	::= formula statement 
+			| <epsilon>.
+
+formula		::= function
+			| expression. 
+
+function 	::= FUN ID LPAREN ID COLON type RPAREN COLON type ASSIGN expression
+			| FN LPAREN ID COLON type RPAREN COLON type ASSIGN expression. 
+
+type		::= type ARROW type1
+			|type1.
+
+type1		::= INT | BOOL. 
+
+decl		::= ID EQ formula.
+
+expression	::= IF expression THEN expression ELSE expression 
+			|LPAREN expression RPAREN
+			|CONST
+			|ID
+			|TERM
+			|LET decl IN expression END
+			|NUM
+			|LPAREN ID expression RPAREN
+			|expression1.
+
+expression1	::= expression2 IMPLIES expression1
+			| expression2.
+
+expression2	::= expression2 binop1 expression3
+			| expression3. 
+
+expression3	::= expression3 binop2 expression4
+			| expression4.
+
+expression4	::= expression4 binop3 expression5
+			| expression5.
+
+expression5	::= expression6 uniop expression5
+			| expression6. 
+
+binop1		::= AND | OR | XOR | EQUALS | LESSTHAN | GREATERTHAN.
+
+binop2		::= PLUS | MINUS. 
+
+binop3 		::= TIMES. 
+
+uniop		::= NOT | NEGATE.
+
+
+FUN			::= "fun"
+FN			::= "fn"
+COLON		::= ":"
+ASSIGN		::= "=>"
+ARROW		::= "->"
+INT			::= "int"
+BOOL		::= "bool"
+EQ			::= "="
+LET			::= "let"
+IN			::= "in"
+END			::= "end"
+TERM		::= ";".
+CONST		::= "TRUE"|"FALSE".
+NOT			::= "NOT".
+AND			::= "AND".
+OR			::= "OR".
+XOR			::= "XOR".
+EQUALS		::= "EQUALS".
+IMPLIES		::= "IMPLIES".
+IF			::= "IF".
+ELSE		::= "ELSE".
+THEN		::= "THEN".
+LPAREN		::= "(".
+RPAREN		::= ")".
+LESSTHAN	::= "LESSTHAN".
+GREATERTHAN	::= "GREATERTHAN".
+PLUS		::= "PLUS".
+MINUS		::= "MINUS".
+TIMES		::= "TIMES".
+NEGATE		::= "NEGATE".
+NUM			::= digit{digit}
+ID			::= alpha{alpha|digit}.
+alpha		::= “A”|“B”|“C”|“D”|“E”|“F”|“G”|“H”|“I”|“J”|“K”|“L”
+			|“M”|“N”|“O”|“P”|“Q”|“R”|“S”|“T”|“U”|“V”|“W”|“X”|“Y”|“Z”
+			|“a”|“b”|“c”|“d”|“e”|“f”|“g”|“h”|“i”|“j”|“k”|“l”
+			|“m”|“n”|“o”|“p”|“q”|“r”|“s”|“t”|“u”|“v”|“w”|“x”|“y”|“z”.
+
+digit 		::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9".
