@@ -1,6 +1,6 @@
-fun func1 (g:bool->int):int => (g TRUE) ;
+fun func1 (g:int->int):int => (g 1) ;
 let 
-	f = fn(x:bool): int=>5 PLUS 6
+	f = fn(x:int): int=>x PLUS 1
 in
 	(func1 f)
 end

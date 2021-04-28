@@ -22,14 +22,14 @@
 
 (* %header  *)
 
-%right IF THEN ELSE
+%nonassoc IF THEN ELSE
 %right IMPLIES
 %left AND OR XOR EQUALS LESSTHAN GREATERTHAN
 %right NOT NEGATE
 %right ARROW 
 %left PLUS MINUS 
 %left TIMES 
-%nonassoc EQ INT BOOL FUN Fn COLON ASSIGN
+
 
 (* %right *)
 (* %nonassoc*)
